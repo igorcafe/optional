@@ -40,7 +40,9 @@ func (o Optional) Filter(f func(any) bool) Optional {
 	return Of(o.value)
 }
 
-// func (o Optional) FlatMap(f func(any) any)
+func (o Optional) FlatMap(f func(any) any) Optional {
+	panic("todo")
+}
 
 func (o Optional) Get() any {
 	if o.IsEmpty() {
@@ -86,13 +88,17 @@ func (o Optional) OrElseGet(f func() any) any {
 	return f()
 }
 
-func (o Optional) OrElseThrow(err error) any {
+func (o Optional) OrElseThrow() any {
 	if o.IsPresent() {
 		return o.value
 	}
 
-	if err == nil {
-		panic("NullPointerException: null")
+	panic("NullPointerException: null")
+}
+
+func (o Optional) OrElseThrowErr(err any) any {
+	if o.IsPresent() {
+		return o.value
 	}
 
 	panic(err)
